@@ -1,7 +1,6 @@
 var _ = require('../util')
 var Cache = require('../cache')
 var pathCache = new Cache(1000)
-var identRE = /^[$_a-zA-Z]+[\w$]*$/
 
 /**
  * Path-parsing algorithm scooped from Polymer/observe-js
@@ -201,23 +200,6 @@ function parsePath (path) {
 }
 
 /**
- * Format a accessor segment based on its type.
- *
- * @param {String} key
- * @return {Boolean}
- */
-
-function formatAccessor(key) {
-  if (identRE.test(key)) { // identifier
-    return '.' + key
-  } else if (+key === key >>> 0) { // bracket index
-    return '[' + key + ']';
-  } else { // bracket string
-    return '["' + key.replace(/"/g, '\\"') + '"]';
-  }
-}
-
-/**
  * Compiles a getter function with a fixed path.
  *
  * @param {Array} path
@@ -225,11 +207,17 @@ function formatAccessor(key) {
  */
 
 exports.compileGetter = function (path) {
-  var body =
-    'try{return o' +
-    path.map(formatAccessor).join('') +
-    '}catch(e){};'
-  return new Function('o', body)
+  return function get (obj) {
+    var segment
+    for (var i = 0, l = path.length - 1; i < l; i++) {
+      segment = path[i]
+      obj = obj[segment]
+      if (!_.isObject(obj)) {
+        return
+      }
+    }
+    return obj[path[i]]
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "vue",
-  "version": "0.11.0",
+  "version": "0.11.0-csp",
   "main": "src/vue.js",
   "author": "Evan You <yyx990803@gmail.com>",
   "description": "Simple, Fast & Composable MVVM for building interative interfaces",
@@ -11,6 +11,7 @@
   ],
   "license": "MIT",
   "scripts": [
+    "vendor/notevil.js",
     "src/api/child.js",
     "src/api/data.js",
     "src/api/dom.js",

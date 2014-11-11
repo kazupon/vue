@@ -40,23 +40,6 @@ describe('Data API', function () {
     // setting unexisting
     vm.$set('c.d', 2)
     expect(vm.c.d).toBe(2)
-    // invalid, should throw
-    if (leftHandThrows()) {
-      // if creating a function with invalid left hand
-      // expression throws, the exp parser will catch the 
-      // error and warn.
-      vm.$set('c + d', 1)
-      expect(_.warn).toHaveBeenCalled()
-    } else {
-      // otherwise it will throw when calling the setter.
-      expect(function () {
-        try {
-          vm.$set('c + d', 1)
-        } catch (e) {
-          return true
-        }
-      }()).toBe(true)
-    }
   })
 
   it('$add', function () {

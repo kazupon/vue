@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     // update component.json first
     var jsRE = /\.js$/
     var component = grunt.file.readJSON('component.json')
-    component.scripts = []
+    component.scripts = ['vendor/notevil.js']
     grunt.file.recurse('src', function (file) {
       if (jsRE.test(file)) {
         component.scripts.push(file)

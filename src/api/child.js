@@ -26,15 +26,10 @@ exports.$addChild = function (opts, BaseCtor) {
     }
     ChildVue = ctors[BaseCtor.cid]
     if (!ChildVue) {
-      var optionName = BaseCtor.options.name
-      var className = optionName
-        ? _.camelize(optionName, true)
-        : 'VueComponent'
-      ChildVue = new Function(
-        'return function ' + className + ' (options) {' +
-        'this.constructor = ' + className + ';' +
-        'this._init(options) }'
-      )()
+      ChildVue = function VueComponent (options) {
+        this.constructor = ChildVue
+        this._init(options)
+      }
       ChildVue.options = BaseCtor.options
       ChildVue.prototype = this
       ctors[BaseCtor.cid] = ChildVue
