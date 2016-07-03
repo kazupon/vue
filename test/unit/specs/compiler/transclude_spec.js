@@ -28,6 +28,14 @@ describe('Transclude', function () {
     expect('Invalid template option').toHaveBeenWarned()
   })
 
+  // # GitHub issue #3197
+  it('svg template invalid', function () {
+    options.template = '  <g><img /></g>  '
+    var res = transclude(el, options)
+    expect(res).toBeUndefined()
+    expect('Invalid template option').toHaveBeenWarned()
+  })
+
   it('template replace', function () {
     el.className = 'hello'
     options.template = '<div>{{hi}}</div>'
