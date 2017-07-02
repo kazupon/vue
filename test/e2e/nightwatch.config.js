@@ -46,9 +46,12 @@ module.exports = {
       }
     },
 
-    'phantomjs': {
+    'headless': {
       'desiredCapabilities': {
-        'browserName': 'phantomjs',
+        'browserName': 'chrome',
+        'chromeOptions': {
+          'args': ['headless']
+        },
         'javascriptEnabled': true,
         'acceptSslCerts': true
       }

@@ -1,8 +1,21 @@
+var webpack = require('webpack')
 var base = require('./karma.base.config.js')
+
+base.webpack.plugins = [
+  new webpack.DefinePlugin({
+    __WEEX__: false,
+    'process.env': {
+      NODE_ENV: '"development"',
+      // for Chrome headless mode
+      TRANSITION_DURATION: 75,
+      TRANSITION_BUFFER: 15
+    }
+  })
+]
 
 module.exports = function (config) {
   var options = Object.assign(base, {
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadless'],
     reporters: ['mocha', 'coverage'],
     coverageReporter: {
       reporters: [
@@ -13,7 +26,7 @@ module.exports = function (config) {
     singleRun: true,
     plugins: base.plugins.concat([
       'karma-coverage',
-      'karma-phantomjs-launcher'
+      'karma-chrome-launcher'
     ])
   })
 
